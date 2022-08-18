@@ -1,16 +1,14 @@
-import React, { Suspense } from "react";
-import { Hero } from "../../components";
-import styled from "styled-components";
+import React, { Suspense } from 'react'
+import { Hero } from '../../components'
+import styled from 'styled-components'
+
+const showSpline = true
 
 export default function Home() {
   return (
     <>
       <Wrapper>
-        <Suspense fallback={null}>
-          <div className="spline">
-            <Hero />
-          </div>
-        </Suspense>
+        <Suspense fallback={null}>{showSpline && <Hero />}</Suspense>
       </Wrapper>
 
       <Content>
@@ -29,45 +27,39 @@ export default function Home() {
         </button>
       </Content>
     </>
-  );
+  )
 }
 
+// I deleted multiple wrappers (including the Spline wrapper)
+// and some margins that were cropping the div the spline
+// scene was in. I also changed the order of Media queries from
+// smallest (mobile size) to largest (desktop size)
+// for good practice.
 const Wrapper = styled.div`
-  font-family: "Spline Sans", sans-serif;
+  font-family: 'Spline Sans', sans-serif;
   color: white;
   font-size: 16px;
-  margin: 0 auto;
   position: relative;
-  height: 100%;
   overflow-x: hidden;
   overflow-y: hidden;
 
-  .spline {
-    position: absolute;
-    margin: 0;
-    top: 0;
-    right: 0;
+  height: 200%;
+  width: 300%;
+  transform-origin: top left;
+  transform: scale(0.4) translateX(-5%);
 
-    width: 100%;
-    height: 100%;
-    @media (max-width: 1024px) {
-      transform: scale(0.8) translateX(200px);
-      transform-origin: top;
-    }
-    @media (max-width: 800px) {
-      transform: scale(0.7) translateX(600px);
-    }
-    @media (max-width: 600px) {
-      transform: scale(0.5) translateX(-100px);
-      right: auto;
-      left: 50%;
-      margin-left: -600px;
-    }
-    @media (max-width: 375px) {
-      transform: scale(0.45) translateX(-50px);
-    }
+  @media (min-width: 375px) {
+    transform: scale(0.5) translateX(-15%);
   }
-`;
+  @media (min-width: 600px) {
+    transform: scale(0.7) translateX(-15%) translateY(-10%);
+  }
+  @media (min-width: 800px) {
+    transform: scale(0.8) translateX(-20%) translateY(-18%);
+  }
+` // MOBILE FIRST ^^^
+// WE GO FROM SMALLEST BREAKPOINT TO LARGEST
+
 const Content = styled.div`
   position: absolute;
   top: 300px;
@@ -82,7 +74,7 @@ const Content = styled.div`
   }
   h1 {
     font-weight: bold;
-    font-family: "Spline Sans Mono", monospace;
+    font-family: 'Spline Sans Mono', monospace;
     font-size: 70px;
     margin: 0;
     max-width: 500px;
@@ -153,4 +145,5 @@ const Content = styled.div`
       color: teal;
     }
   }
-`;
+`
+
