@@ -1,2 +1,2 @@
-# Studio Huit SplineDesign Portfolio
+
 
